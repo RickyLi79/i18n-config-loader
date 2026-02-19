@@ -1,3 +1,7 @@
+[English] | [[中文版]](./README.zh-CN.md)
+
+---
+
 # **i18nConfigLoader - Leverage the i18n Ecosystem for Effortless Configuration Management** 🚀
 
 > **Harness the power of i18n to manage your configuration like never before!**
@@ -7,6 +11,13 @@
 **Keep sensitive data in `.env` – don't risk it!**  
 This tool is designed for business configuration only. Secrets, passwords, and keys belong in your `.env` file.  
 Ignoring this warning may lead to data leaks – you have been warned.
+
+---
+
+## **🚨 Critical Limitations – Read Before Using**
+
+- **Node.js only** – This loader uses Node.js file system APIs (`fs`) to read configuration files from disk. It is **not compatible** with browser environments. If you need browser-side configuration, consider a different approach.
+- **JSON only** – Configuration files must be in **`.json` format**. Other formats (`.js`, `.yaml`, etc.) are not supported and will cause errors.
 
 ---
 
@@ -79,6 +90,8 @@ const user = $t<User>('resource.users.admin'); // directly typed as User
 
 ## **Practical Use Cases – Particularly for Test Automation** 🧪
 
+_All examples assume a Node.js runtime (e.g., Jest, Mocha)._
+
 ### **Test Data Management – From Chaos to Clarity** 😇
 
 ```typescript
@@ -134,7 +147,7 @@ I built a thin wrapper and inherited ten years of i18n ecosystem maturity. That'
 ## **Who Will Benefit (Especially Test Engineers)** 👥
 
 - **Test Engineers** 🧪: Centralise test data, selectors, and endpoints – maintenance costs drop to near zero.
-- **Node.js Developers** 🚀: No more hard‑coded configuration; development experience improves dramatically.
+- **Node.js Developers** 🚀: No more hard‑coded configuration; development experience improves dramatically. _(This tool is built specifically for Node.js – see limitations above.)_
 - **SaaS Architects** 🏗️: Multi‑tenant configuration management becomes trivial.
 - **Full‑stack Engineers** 🌐: Eliminate repetitive backend configuration tasks.
 - **New Team Members** 🌱: Configuration serves as documentation; onboarding time shrinks from hours to minutes.
@@ -143,8 +156,9 @@ I built a thin wrapper and inherited ten years of i18n ecosystem maturity. That'
 
 1. **Keep secrets in `.env`** 🚫 – never store passwords or keys in configuration files.
 2. **No hot‑reload support** 🔥 – configuration is loaded once at startup and never changes. Don't ask why.
-3. **Node.js only** 💻 – not designed for browser environments.
-4. **Don't request features** 🙅 – the tool is feature‑complete in my opinion; use it as is or not at all.
+3. **Node.js only** 💻 – not designed for browser environments. (Repeated for emphasis – we really mean it!)
+4. **JSON only** 📄 – other file formats are not supported. (Again, this is a hard limitation.)
+5. **Don't request features** 🙅 – the tool is feature‑complete in my opinion; use it as is or not at all.
 
 ---
 
