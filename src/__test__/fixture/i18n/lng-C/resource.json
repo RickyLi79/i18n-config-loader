@@ -1,0 +1,8 @@
+{
+  "value-base": "base-base",
+  "value-A": "base-A",
+  "nested1": {
+    "key1": "value1"
+  },
+  "only-in-base": "only-base"
+}

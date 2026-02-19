@@ -1,0 +1,27 @@
+# Node
+node_modules/
+
+# Build output
+dist/
+
+# Logs
+*.log
+
+# TypeScript
+*.tsbuildinfo
+
+# Env files
+.env
+.env.*
+
+# IDEs and editors
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+
+# pnpm
+.pnpm-debug.log

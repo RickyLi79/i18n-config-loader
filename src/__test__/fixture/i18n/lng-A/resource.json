@@ -1,0 +1,9 @@
+{
+  "value-A": "value-AA",
+  "nested1": {
+    "key2": "value2"
+  },
+
+  "greet": "hello, {name}",
+  "only-in-a": "only-A"
+}
