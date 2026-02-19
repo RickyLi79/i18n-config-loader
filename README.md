@@ -45,6 +45,37 @@ t('resource.api.timeout'); // Autocompletion, inline warnings, hover to see valu
 By simply following i18next's directory structure, you automatically gain access to the entire i18n ecosystem toolchain: VS Code extensions, error checking, smart suggestions – all for free. No extra work required.  
 (Note: This relies on the VS Code plugin `i18n Ally` and is not a built‑in feature of this loader.)
 
+#### **🔧 VS Code Configuration Tips: Make i18n Ally Work for You**
+
+To get the most out of the i18n Ally plugin, create a `.vscode/settings.json` file in your project root and paste the following configuration (adjust paths to match your project):
+
+```jsonc
+// .vscode/settings.json
+{
+  "i18n-ally.localesPaths": ["src/config"], // Change this to your config root directory
+  "i18n-ally.pathMatcher": "{locale}/{namespaces}.{ext}",
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.namespace": true,
+  "i18n-ally.enabledParsers": ["json"],
+  "i18n-ally.sourceLanguage": "DEFAULT", // fallback language (note: i18n-ally only supports a single fallback, not multiple levels 😢)
+  "i18n-ally.displayLanguage": "DEV", // current main environment (i.e., mainEnv)
+  "i18n-ally.enabledFrameworks": ["vue", "react"], // This setting won't affect config loading
+  "i18n-ally.annotationInPlace": true,
+}
+```
+
+**Explanation:**
+
+- `localesPaths`: Tells the plugin where to find your configuration files.
+- `sourceLanguage`: The fallback language (equivalent to `fallbackEnv`), but the plugin only supports one – if you have multiple fallbacks, only this one will be shown.
+- `displayLanguage`: The current editing environment; the plugin will prioritize values from this environment.
+- Other options: key style, sorting, namespace, etc. – tweak to your preference.
+
+With this setup, writing `t('xxx')` will give you autocompletion, jump-to-definition, hover tooltips, and more – your development experience will skyrocket! 🛫
+
+---
+
 ### **Benefit #2: i18next Variable Interpolation – Built‑in Templating Engine** 🔧
 
 ```json

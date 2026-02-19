@@ -14,11 +14,10 @@
 
 ---
 
-## **🚨 重要提示：Node.js only！** 💻
+## **🚨 重要限制：先看再使！**
 
-**本工具基于 Node.js 文件系统（`fs`）实现，直接从磁盘读取 JSON 配置文件，因此只能在 Node.js 环境中运行。**  
-**浏览器端？别想了，设计理念不同，而且我也没打算兼容。**  
-（你要是非要在浏览器里用，那就自己想办法 polyfill 吧，但我可没空帮你 debug。）
+- **Node.js only** 💻 – 本工具基于 Node.js 文件系统（`fs`）实现，直接从磁盘读取 JSON 配置文件，**浏览器端想都别想**。
+- **JSON only** 📄 – 配置文件必须是 **`.json` 格式**，别放 `.js`、`.yaml` 之类的，会炸。
 
 ---
 
@@ -46,6 +45,37 @@ t('resource.api.timeout'); // 输入时自动补全，红色波浪线防错
 **亮点** ✨  
 我啥都没干，就白嫖了i18n生态的完整工具链！VS Code 插件、错误检查、智能提示……全是现成的！别人还在苦哈哈写文档，我已经享受上了！  
 （注：这得益于项目结构符合 i18next 规范，插件自动生效，并非本工具内置功能）
+
+#### **🔧 VS Code 配置小贴士：让 i18n Ally 更懂你**
+
+想让 i18n Ally 插件发挥最大威力？在项目根目录创建 `.vscode/settings.json`，贴入以下配置（根据实际情况调整路径）：
+
+```jsonc
+// .vscode/settings.json
+{
+  "i18n-ally.localesPaths": ["src/config"], // 这里改成你的配置文件根目录
+  "i18n-ally.pathMatcher": "{locale}/{namespaces}.{ext}",
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.namespace": true,
+  "i18n-ally.enabledParsers": ["json"],
+  "i18n-ally.sourceLanguage": "DEFAULT", // fallback 语言（注意：i18n-ally 只支持一层 fallback，多了它认不出来 😢）
+  "i18n-ally.displayLanguage": "DEV", // 当前主环境，也就是 mainEnv
+  "i18n-ally.enabledFrameworks": ["vue", "react"], // 这样设就行，不会影响配置加载
+  "i18n-ally.annotationInPlace": true,
+}
+```
+
+**解释一下：**
+
+- `localesPaths`：告诉插件去哪找你的配置文件。
+- `sourceLanguage`：回退语言（相当于 fallbackEnv），但插件只认一个，所以如果你有多级 fallback，它只显示这一层的值。
+- `displayLanguage`：当前编辑环境，插件会优先显示这个环境的值。
+- 其他选项：键风格、排序、命名空间等，看个人喜好。
+
+有了这个配置，写 `t('xxx')` 时自动补全、跳转、悬停提示全都有了，开发体验直接起飞！🛫
+
+---
 
 ### **抱大腿姿势二：i18next变量替换 - 自带的模板引擎** 🔧
 
@@ -92,7 +122,7 @@ const user = $t<User>('resource.users.admin'); // 直接当作 User 类型使用
 
 ## **我在自动化测试项目里用，真香！** 🧪
 
-（以下示例均在 Node.js 环境下运行，比如 Jest、Mocha 等）
+_以下示例均在 Node.js 环境下运行（比如 Jest、Mocha）。_
 
 ### **测试数据管理 - 从地狱到天堂** 😇
 
@@ -158,7 +188,8 @@ git clone 项目
 1. **敏感数据放 `.env`** 🚫，别作死往配置里写密码密钥！
 2. 这工具**不支持热切换** 🔥，配置加载完就不变了，别来问为什么
 3. **Node.js only** 💻（我已经说了三遍了，你要是还想着在浏览器用，那我只能说你头铁）
-4. **别求我加功能** 🙅，我觉得够用了，你爱用不用
+4. **JSON only** 📄（再重复一遍，只认 .json，别的格式别来沾边）
+5. **别求我加功能** 🙅，我觉得够用了，你爱用不用
 
 ---
 
