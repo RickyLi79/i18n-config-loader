@@ -1,11 +1,23 @@
 {
   "name": "@rickyli79/i18n-config-loader",
+  "homepage": "https://github.com/RickyLi79/i18n-config-loader#readme",
+  "bugs": {
+    "url": "https://github.com/RickyLi79/i18n-config-loader/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "version": "1.1.1",
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "author": "Ricky Li",
+  "author": {
+    "name": "Ricky Li",
+    "email": "382688672@qq.com",
+    "url": "https://github.com/RickyLi79"
+  },
   "license": "MIT",
   "scripts": {
     "test": "vitest",
@@ -34,5 +46,8 @@
   "dependencies": {
     "i18next": "^25.7.4"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "files": [
+    "dist/"
+  ]
 }
