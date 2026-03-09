@@ -164,7 +164,7 @@ export class I18nConfigLoader {
     return undefined;
   }
 
-  public t = (key: string, replace?: Record<string, any>) => {
+  protected _t = (key: string, replace?: Record<string, any>, returnKey?: boolean) => {
     this.throwIfDisposed();
     let ns = '';
     let subKey = key;
@@ -181,16 +181,22 @@ export class I18nConfigLoader {
       subKey = key;
     }
     let value = this.getRawValue(ns, subKey);
-    if (value === undefined) return key;
+    if (value === undefined) {
+      if (!returnKey) return undefined;
+      return key;
+    }
     if (typeof value === 'string' && replace && this._main) {
       value = (this._main as any).services.interpolator.interpolate(value, replace, this._mainEnv, this._main.options);
     }
     return value;
   };
 
+  public t = (key: string, replace?: Record<string, any>) => {
+    return this._t(key, replace, true);
+  };
+
   public $t = <T = any>(key: string) => {
-    this.throwIfDisposed();
-    return this.t(key) as T;
+    return this._t(key, undefined, false) as T;
   };
 
   public dispose() {

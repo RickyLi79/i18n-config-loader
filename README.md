@@ -119,6 +119,52 @@ const user = $t<User>('resource.users.admin'); // directly typed as User
 // However, it's still more convenient than manually casting with `as`.
 ```
 
+### **Benefit #5: Two Access Methods for Different Use Cases** 🔧
+
+The loader provides two methods for accessing configuration values, each with distinct behavior:
+
+#### **`t(key, replace?)` – For Flexible Configuration Access**
+
+```typescript
+// Basic usage - returns value or key if not found
+const value = t('resource.api.timeout'); // returns 5000 or 'resource.api.timeout'
+
+// With variable interpolation
+const url = t('resource.api.url', { env: 'production', version: 'v2' });
+
+// Behavior when key is not found
+const notFound = t('resource.nonexistent.key'); // returns 'resource.nonexistent.key'
+```
+
+**Key characteristics:**
+
+- **Returns original key if not found** – safe for templates and UI strings
+- **Supports variable interpolation** – use `{{placeholders}}` in JSON
+- **Ideal for** – configuration values that may be missing, template strings
+
+#### **`$t<T>(key)` – For Type‑Safe Strict Access**
+
+```typescript
+// Type-safe access with assertions
+const timeout = $t<number>('resource.api.timeout'); // returns number or undefined
+const user = $t<User>('resource.users.admin'); // returns User object or undefined
+
+// Behavior when key is not found
+const notFound = $t('resource.nonexistent.key'); // returns undefined
+```
+
+**Key characteristics:**
+
+- **Returns undefined if not found** – strict mode for required configuration
+- **No variable interpolation** – returns raw values only
+- **TypeScript type assertions** – convenient casting with `<T>` syntax
+- **Ideal for** – required configuration values, type‑safe data structures
+
+**When to use which:**
+
+- Use `t()` when you need variable replacement or want graceful fallback
+- Use `$t()` when you need strict undefined checking or type assertions
+
 ## **Practical Use Cases – Particularly for Test Automation** 🧪
 
 _All examples assume a Node.js runtime (e.g., Jest, Mocha)._

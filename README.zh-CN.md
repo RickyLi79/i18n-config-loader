@@ -120,6 +120,52 @@ const user = $t<User>('resource.users.admin'); // 直接当作 User 类型使用
 // 但至少比裸用 t 然后 as 要爽，对吧？ 😏
 ```
 
+### **抱大腿姿势五：两种访问方式，应对不同场景** 🔧
+
+我提供了两种配置访问方法，各有各的妙用：
+
+#### **`t(key, replace?)` – 灵活配置访问**
+
+```typescript
+// 基本用法 - 找到返回配置值，找不到返回原键名
+const value = t('resource.api.timeout'); // 返回 5000 或 'resource.api.timeout'
+
+// 带变量替换
+const url = t('resource.api.url', { env: 'production', version: 'v2' });
+
+// 找不到键时的行为
+const notFound = t('resource.nonexistent.key'); // 返回 'resource.nonexistent.key'
+```
+
+**核心特点：**
+
+- **找不到键时返回原键名** – 对模板和UI字符串很安全
+- **支持变量替换** – 在JSON里用 `{{占位符}}`
+- **适用场景** – 可能缺失的配置值、模板字符串
+
+#### **`$t<T>(key)` – 类型安全的严格访问**
+
+```typescript
+// 类型安全访问，带断言
+const timeout = $t<number>('resource.api.timeout'); // 返回 number 或 undefined
+const user = $t<User>('resource.users.admin'); // 返回 User 对象或 undefined
+
+// 找不到键时的行为
+const notFound = $t('resource.nonexistent.key'); // 返回 undefined
+```
+
+**核心特点：**
+
+- **找不到键时返回 undefined** – 严格模式，适合必需配置
+- **不支持变量替换** – 只返回原始值
+- **TypeScript类型断言** – 用 `<T>` 语法方便转换类型
+- **适用场景** – 必需的配置值、类型安全的数据结构
+
+**什么时候用哪个：**
+
+- 用 `t()` – 需要变量替换，或者希望优雅降级
+- 用 `$t()` – 需要严格检查undefined，或者需要类型断言
+
 ## **我在自动化测试项目里用，真香！** 🧪
 
 _以下示例均在 Node.js 环境下运行（比如 Jest、Mocha）。_
